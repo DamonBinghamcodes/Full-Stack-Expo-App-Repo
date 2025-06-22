@@ -1,0 +1,4 @@
+{
+  "/api/onboarding/route": "app/api/onboarding/route.js",
+  "/api/auth/[...auth]/route": "app/api/auth/[...auth]/route.js"
+}
