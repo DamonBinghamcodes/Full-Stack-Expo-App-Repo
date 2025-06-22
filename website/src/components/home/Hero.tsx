@@ -7,7 +7,7 @@ export default function Hero() {
             <div className="flex flex-col md:flex-row items-center justify-between container mx-auto px-4 gap-16 md:gap-10">
                 <div className="flex flex-col gap-4">
                     <h1 className="text-4xl md:text-6xl font-bold text-black">
-                        Create X in Y with Z!
+                        The Rigger In Your Pocket
                     </h1>
 
                     <p className="text-black/90">

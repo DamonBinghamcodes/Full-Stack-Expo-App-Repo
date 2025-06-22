@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import Logo from "../brand/Logo";
+import RygtekLogo from "../brand/Rygtek-Logo";
 
 export default function Navbar() {
     const router = useRouter();
@@ -7,7 +7,7 @@ export default function Navbar() {
     return (
         <div className="flex items-center justify-between container mx-auto absolute top-0 left-0 right-0 py-6  px-4">
             <div className="cursor-pointer" onClick={() => router.push("/")}>
-                <Logo />
+                <RygtekLogo />
             </div>
 
             <div className="flex gap-8 items-center">
