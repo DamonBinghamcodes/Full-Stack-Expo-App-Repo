@@ -3,35 +3,39 @@ import GoogleButton from "../ui/GoogleButton";
 
 export default function Hero() {
     return (
-        <div className="py-[200px]">
+        <div className="py-[200px] pt-24">
             <div className="flex flex-col md:flex-row items-center justify-between container mx-auto px-4 gap-16 md:gap-10">
                 <div className="flex flex-col gap-4">
                     <h1 className="text-4xl md:text-6xl font-bold text-black">
-                        The Rigger In Your Pocket
+                        THE RIGGER IN YOUR POCKET
                     </h1>
 
+                    <p className="text-xl font-semibold text-black/80 mb-2">
+                        Precision. Safety. Innovation.
+                    </p>
+
                     <p className="text-black/90">
-                        Select from a wide range of templates and styles to
-                        create X in Y with Z! Add in an customisation that you
-                        want!
+                        Professional rigging calculations and safety tools in one powerful mobile app.
                     </p>
 
                     <div className="flex gap-4 items-center">
                         <AppleButton
                             onClick={() =>
                                 window.open(
-                                    "https://apps.apple.com/au/app/petraits/id6745168293",
+                                    "https://apps.apple.com/app/rygtek",
                                     "_blank"
                                 )
                             }
-                        />
+                        >
+                            Get Started
+                        </AppleButton>
                         <GoogleButton />
                     </div>
                 </div>
 
                 <img
-                    src="/assets/hero.png"
-                    alt="Hero"
+                    src="/assets/rygtek-screenshot.png"
+                    alt="Rygtek App Preview"
                     className="w-full md:w-1/4"
                 />
             </div>

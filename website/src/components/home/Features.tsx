@@ -4,7 +4,7 @@ export default function Features() {
     const FeatureCard = ({ feature }: { feature: (typeof FEATURES)[0] }) => (
         <div
             key={feature.title}
-            className="bg-gray-50 border border-green-100 p-4 rounded-2xl flex flex-col gap-4 relative"
+            className="bg-white border border-green-100 p-4 rounded-2xl flex flex-col gap-4 relative"
         >
             <div className="flex items-center gap-2">
                 <span className="text-2xl">{feature.icon}</span>
@@ -28,7 +28,7 @@ export default function Features() {
         <div className="bg-primary">
             <div className="container  mx-auto px-4 py-24">
                 <h2 className="text-5xl font-bold text-center mb-10 text-white">
-                    Features
+                    Professional Rigging Calculations & Safety Tools
                 </h2>
 
                 <div className="space-y-12">

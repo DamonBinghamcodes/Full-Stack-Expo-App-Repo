@@ -8,11 +8,23 @@ import { useSubscription } from "@/hooks/useSubscription";
 import * as Notifications from "expo-notifications";
 import { router } from "expo-router";
 import { Alert, Linking, Platform, ScrollView, View } from "react-native";
-import { PAYWALL_RESULT } from "react-native-purchases-ui";
+// import { PAYWALL_RESULT } from "react-native-purchases-ui";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDeleteAccount } from "../../api/account/delete";
 import SettingsSection from "../../components/account/SettingsSection";
 import { authClient } from "../../lib/auth-client";
+
+let PAYWALL_RESULT: any = null;
+
+if (
+  Platform.OS !== "web" &&
+  Platform.constants?.appOwnership !== "expo"
+) {
+  // Only import if NOT running in Expo Go or web
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const rc = require("react-native-purchases-ui");
+  PAYWALL_RESULT = rc.PAYWALL_RESULT;
+}
 
 export default function AccountPage() {
     const { presentPaywall } = useSubscription();

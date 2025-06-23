@@ -2,7 +2,7 @@ import { AppleIcon, GoogleIcon, MailIcon } from "@/components/icons";
 import Button from "@/components/ui/Button";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { authClient } from "../../lib/auth-client";
 import { revenueCatService } from "../../services/revenuecat";
@@ -90,6 +90,22 @@ export default function AuthScreen() {
         <View className="flex-1 bg-white">
             <SafeAreaView>
                 <View className="flex-col justify-between gap-4 mt-auto mb-10 px-4 h-full pb-10">
+                    {/* Rygtek Logo */}
+                    <View className="items-center mt-8 mb-4">
+                        <Image
+                            source={require("@/assets/images/Rygtek-Logo.png")}
+                            style={{ width: 300, height: 300, resizeMode: "contain" }}
+                        />
+                    </View>
+
+                    {/* Headline and Subheadline */}
+                    <Text className="text-center text-black text-2xl font-extrabold mb-1">
+                        THE RIGGER IN YOUR POCKET
+                    </Text>
+                    <Text className="text-center text-gray-700 text-base mb-6">
+                        Professional rigging calculations and safety tools
+                    </Text>
+
                     <Text className="text-center text-black text-[24px] font-bold mb-2">
                         Login
                     </Text>

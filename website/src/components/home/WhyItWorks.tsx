@@ -5,7 +5,8 @@ export default function WhyItWorks() {
     return (
         <div className="bg-gray-100">
             <div className="container mx-auto py-24 flex flex-col justify-center gap-16 items-center px-4">
-                <h2 className="text-5xl font-bold text-center">How it works</h2>
+                <h2 className="text-xl font-semibold text-center mb-2 text-primary">Precision. Safety. Innovation.</h2>
+                <h2 className="text-5xl font-bold text-center">How Rygtek Works</h2>
 
                 <div className="flex flex-col md:flex-row items-center justify-center gap-20">
                     <div className="flex-col gap-6 max-w-xl w-1/2">
@@ -32,8 +33,8 @@ export default function WhyItWorks() {
                     </div>
 
                     <img
-                        src="/assets/how.png"
-                        alt="Art Preview"
+                        src="/assets/rygtek-screenshot2.png"
+                        alt="Rygtek App Interface"
                         className="w-full md:w-1/3"
                     />
                 </div>

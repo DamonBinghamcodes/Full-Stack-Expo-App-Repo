@@ -5,7 +5,7 @@ export default function Navbar() {
     const router = useRouter();
 
     return (
-        <div className="flex items-center justify-between container mx-auto absolute top-0 left-0 right-0 py-6  px-4">
+        <div className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur border-b border-gray-200 flex items-center justify-between container mx-auto py-0 px-4 transition-all min-h-[56px]">
             <div className="cursor-pointer" onClick={() => router.push("/")}>
                 <RygtekLogo />
             </div>

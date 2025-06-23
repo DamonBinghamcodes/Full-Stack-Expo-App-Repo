@@ -1,50 +1,71 @@
 export const FEATURES = [
     {
-        title: "User-Friendly Interface",
+        title: "Rigging Calculators",
         description:
-            "Intuitive design and seamless navigation make our app easy to use for everyone.",
-        icon: "✨",
+            "Instantly calculate load weights, sling tensions, and more for safe and efficient rigging.",
+        icon: "🧮",
         available: true,
     },
     {
-        title: "Customization Options",
+        title: "Load Charts",
         description:
-            "Personalize your experience with flexible customization settings.",
-        icon: "⚡️",
+            "Access up-to-date load charts for a wide range of equipment and scenarios.",
+        icon: "📊",
         available: true,
     },
     {
-        title: "Cloud Sync",
+        title: "Safety Tools",
         description:
-            "Access your data securely from any device with real-time synchronization.",
-        icon: "☁️",
+            "Built-in safety factor checks, compliance guidelines, and risk assessment tools.",
+        icon: "🦺",
         available: true,
     },
     {
-        title: "Premium Features",
+        title: "Equipment Library",
         description:
-            "Unlock advanced capabilities and exclusive content with our premium tier.",
-        icon: "⭐️",
-        available: false,
+            "Store and manage your rigging gear profiles for quick reference and accurate calculations.",
+        icon: "📚",
+        available: true,
+    },
+    {
+        title: "Project Management",
+        description:
+            "Organize, save, and revisit multiple rigging projects and configurations.",
+        icon: "📁",
+        available: true,
+    },
+    {
+        title: "Offline Access",
+        description:
+            "Use essential tools and charts even when you're out of network range.",
+        icon: "📶",
+        available: true,
+    },
+    {
+        title: "Regular Updates",
+        description:
+            "Stay current with the latest standards, charts, and safety information.",
+        icon: "🔄",
+        available: true,
     },
 ];
 
 export const REASONS = [
     {
-        title: "Sign up in seconds",
+        title: "Download and start rigging",
         description:
-            "Create your account quickly and securely to get started right away.",
+            "Get the app instantly and begin using professional rigging tools within minutes.",
         icon: "✓",
     },
     {
-        title: "Customize your workspace",
-        description: "Set up your preferences and personalize your experience.",
+        title: "Configure your equipment",
+        description: "Set up your rigging gear profiles and load capacities for accurate calculations.",
         icon: "✓",
     },
     {
-        title: "Start achieving results",
+        title: "Execute safe operations",
         description:
-            "Begin using the app's features immediately and see the benefits.",
+            "Use real-time calculations and safety guidelines to ensure every lift is performed safely.",
         icon: "✓",
     },
 ];

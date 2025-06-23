@@ -1,17 +1,17 @@
 import { useRouter } from "next/router";
-import Logo from "../brand/Logo";
+import RygtekLogo from "../brand/Rygtek-Logo";
 
 export default function Footer() {
     const router = useRouter();
     const year = new Date().getFullYear();
 
     return (
-        <div className="bg-gray-100">
+        <div className="bg-white">
             <div className="container mx-auto py-24 flex flex-col items-center gap-10">
-                <Logo />
+                <RygtekLogo width={150} height={100} />
 
                 <p className="text-black/90 text-center text-md w-3/4 mx-auto">
-                    Copyright © {year} App Name. All rights reserved.
+                    Copyright © {year} Rygtek. All rights reserved.
                 </p>
 
                 <div className="flex gap-4">

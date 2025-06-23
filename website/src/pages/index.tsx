@@ -7,7 +7,7 @@ import Navbar from "@/components/nav/Navbar";
 
 export default function Home() {
     return (
-        <div className="flex flex-col relative">
+        <div className="flex flex-col relative pt-24">
             <Navbar />
 
             <Hero />

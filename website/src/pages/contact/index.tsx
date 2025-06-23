@@ -20,7 +20,7 @@ export default function Contact() {
         <div className="h-screen flex flex-col">
             <Navbar />
 
-            <div className="container mx-auto py-24 flex flex-col items-center gap-10 flex-grow">
+            <div className="container mx-auto py-24 mt-24 flex flex-col items-center gap-10 flex-grow">
                 <h1 className="text-4xl font-bold text-center">Contact Us</h1>
 
                 <div className="bg-gray-100 p-8 rounded-2xl w-full max-w-2xl mx-auto flex flex-col gap-2">

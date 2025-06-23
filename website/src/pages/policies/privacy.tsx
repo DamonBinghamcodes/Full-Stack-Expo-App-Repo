@@ -8,7 +8,7 @@ export default function Privacy() {
         <div className="min-h-screen flex flex-col">
             <Navbar />
 
-            <div className="max-w-4xl mx-auto p-6 bg-gray-50 rounded-2xl my-20 prose prose-slate">
+            <div className="max-w-4xl mx-auto p-6 bg-gray-50 rounded-2xl my-20 prose prose-slate pt-24">
                 <ReactMarkdown>{privacyContent}</ReactMarkdown>
             </div>
 

@@ -22,7 +22,22 @@
  */
 
 import Purchases, { CustomerInfo } from "react-native-purchases";
-import RevenueCatUI, { PAYWALL_RESULT } from "react-native-purchases-ui";
+// import RevenueCatUI, { PAYWALL_RESULT } from "react-native-purchases-ui";
+import { Platform } from "react-native";
+
+let RevenueCatUI: any = null;
+let PAYWALL_RESULT: any = null;
+
+if (
+  Platform.OS !== "web" &&
+  Platform.constants?.appOwnership !== "expo"
+) {
+  // Only import if NOT running in Expo Go or web
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const rc = require("react-native-purchases-ui");
+  RevenueCatUI = rc.RevenueCatUI;
+  PAYWALL_RESULT = rc.PAYWALL_RESULT;
+}
 
 /**
  * RevenueCat service implementation using the Singleton pattern
