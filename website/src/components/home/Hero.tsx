@@ -36,7 +36,7 @@ export default function Hero() {
                 <img
                     src="/assets/rygtek-screenshot.png"
                     alt="Rygtek App Preview"
-                    className="w-full md:w-1/4"
+                    className="w-full"
                 />
             </div>
         </div>

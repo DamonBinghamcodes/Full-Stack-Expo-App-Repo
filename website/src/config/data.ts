@@ -1,71 +1,95 @@
 export const FEATURES = [
     {
-        title: "Rigging Calculators",
+        title: "Working Load Limit",
         description:
-            "Instantly calculate load weights, sling tensions, and more for safe and efficient rigging.",
-        icon: "🧮",
+            "Calculate chain or sling WLL based on configuration and size for safe rigging operations.",
+        icon: "weight-hanging",
         available: true,
     },
     {
-        title: "Load Charts",
+        title: "Angle & Dimensions",
         description:
-            "Access up-to-date load charts for a wide range of equipment and scenarios.",
-        icon: "📊",
+            "Determine sling angles and calculate missing dimensions for precise rigging setup.",
+        icon: "ruler-combined",
         available: true,
     },
     {
-        title: "Safety Tools",
+        title: "Load Weight Estimator",
         description:
-            "Built-in safety factor checks, compliance guidelines, and risk assessment tools.",
-        icon: "🦺",
+            "Estimate load weight by material type and dimensions for accurate planning.",
+        icon: "boxes-stacked",
         available: true,
     },
     {
-        title: "Equipment Library",
+        title: "Lifting Register",
         description:
-            "Store and manage your rigging gear profiles for quick reference and accurate calculations.",
-        icon: "📚",
+            "Track rigging gear test history and due dates to maintain compliance.",
+        icon: "clipboard-list",
         available: true,
     },
     {
-        title: "Project Management",
+        title: "Safety Alerts",
         description:
-            "Organize, save, and revisit multiple rigging projects and configurations.",
-        icon: "📁",
+            "Access industry safety alerts and notifications to stay informed.",
+        icon: "triangle-exclamation",
+        available: true,
+        premium: true,
+    },
+    {
+        title: "Crane Signals",
+        description:
+            "Reference guide for standard crane hand signals and whistle commands.",
+        icon: "person-rays",
+        available: true,
+    },
+    {
+        title: "Shop",
+        description:
+            "PPE gear and branded merchandise.",
+        icon: "box",
+        available: true,
+    },
+    {
+        title: "Contact",
+        description:
+            "Send feedback or get support from our team.",
+        icon: "clipboard-list",
         available: true,
     },
     {
         title: "Offline Access",
         description:
             "Use essential tools and charts even when you're out of network range.",
-        icon: "📶",
-        available: true,
-    },
-    {
-        title: "Regular Updates",
-        description:
-            "Stay current with the latest standards, charts, and safety information.",
-        icon: "🔄",
+        icon: "wifi",
         available: true,
     },
 ];
 
 export const REASONS = [
     {
-        title: "Download and start rigging",
-        description:
-            "Get the app instantly and begin using professional rigging tools within minutes.",
+        title: "Download & Launch",
+        description: "Get the Rygtek app and access professional rigging tools instantly.",
         icon: "✓",
     },
     {
-        title: "Configure your equipment",
-        description: "Set up your rigging gear profiles and load capacities for accurate calculations.",
+        title: "Choose Your Tool",
+        description: "Select from calculators, registers, safety alerts, and more.",
         icon: "✓",
     },
     {
-        title: "Execute safe operations",
-        description:
-            "Use real-time calculations and safety guidelines to ensure every lift is performed safely.",
+        title: "Enter Details",
+        description: "Input your rigging setup or select equipment to get precise results.",
+        icon: "✓",
+    },
+    {
+        title: "Get Instant Results",
+        description: "View safe working loads, angles, weights, and compliance info.",
+        icon: "✓",
+    },
+    {
+        title: "Stay Safe & Compliant",
+        description: "Track gear, receive safety alerts, and use reference guides—anywhere, even offline.",
         icon: "✓",
     },
 ];
+
