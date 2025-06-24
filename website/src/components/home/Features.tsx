@@ -5,18 +5,18 @@ import {
     FaRuler, 
     FaBox, 
     FaClipboardList, 
-    FaPersonWalking, 
-    FaTriangleExclamation, 
-    FaWifi 
-} from "react-icons/fa6";
+    FaExclamationTriangle, 
+    FaWifi, 
+    FaUser 
+} from "react-icons/fa";
 
 const iconMap = {
     "weight-hanging": FaWeightHanging,
     "ruler-combined": FaRuler,
     "boxes-stacked": FaBox,
     "clipboard-list": FaClipboardList,
-    "person-rays": FaPersonWalking,
-    "triangle-exclamation": FaTriangleExclamation,
+    "person-rays": FaUser,
+    "triangle-exclamation": FaExclamationTriangle,
     "wifi": FaWifi,
     "box": FaBox,
 };
