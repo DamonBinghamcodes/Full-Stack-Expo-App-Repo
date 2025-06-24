@@ -41,7 +41,7 @@ export default function SignupScreen() {
                 await revenueCatService.identifyUser(session.data.user.id);
             }
 
-            router.replace("yourapp://(tabs)");
+            router.replace("/onboarding/disclaimer");
         } catch (error) {
             console.error("Registration failed:", error);
             setErrorMessage(
@@ -73,6 +73,8 @@ export default function SignupScreen() {
             if (session?.data?.user?.id) {
                 await revenueCatService.identifyUser(session.data.user.id);
             }
+            
+            router.replace("/onboarding/disclaimer");
         } catch (error) {
             console.error("Google signup failed:", error);
         } finally {
@@ -93,6 +95,8 @@ export default function SignupScreen() {
             if (session?.data?.user?.id) {
                 await revenueCatService.identifyUser(session.data.user.id);
             }
+            
+            router.replace("/onboarding/disclaimer");
         } catch (error) {
             console.error("Apple signup failed:", error);
         } finally {
@@ -102,10 +106,10 @@ export default function SignupScreen() {
 
     useEffect(() => {
         console.log("session", session);
-
-        if (session) {
-            router.replace("/(tabs)");
-        }
+        // Remove automatic redirect to tabs - let users go through disclaimer flow
+        // if (session) {
+        //     router.replace("/(tabs)");
+        // }
     }, [session]);
 
     return (

@@ -5,7 +5,7 @@ import { LinkedInIcon } from "@/components/icons/LinkedInIcon";
 import Button from "@/components/ui/Button";
 import { router } from "expo-router";
 import React, { useEffect, useState, useRef } from "react";
-import { Image, Text, TextInput, TouchableOpacity, View, Linking, Animated, Easing } from "react-native";
+import { Image, Text, TextInput, TouchableOpacity, View, Linking, Animated, Easing, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { authClient } from "../../lib/auth-client";
 import { revenueCatService } from "../../services/revenuecat";
@@ -27,6 +27,7 @@ export default function AuthScreen() {
 
     const handleEmailLogin = async () => {
         try {
+            console.log("Starting email login...");
             setIsEmailLoading(true);
 
             await authClient.signIn.email({
@@ -34,15 +35,33 @@ export default function AuthScreen() {
                 password,
             });
 
+            console.log("Email login successful, getting session...");
             // Initialize RevenueCat with the user's ID
             const session = await authClient.getSession();
+            console.log("Session obtained:", session);
+            
             if (session?.data?.user?.id) {
+                console.log("User ID found, identifying with RevenueCat...");
                 await revenueCatService.identifyUser(session.data.user.id);
             }
 
-            router.replace("/onboarding/disclaimer");
+            console.log("Navigating to disclaimer...");
+            try {
+                await router.replace("/onboarding/disclaimer");
+                console.log("Navigation to disclaimer successful");
+            } catch (navError) {
+                console.error("Navigation failed:", navError);
+                Alert.alert("Navigation Error", "Failed to navigate to disclaimer page");
+            }
         } catch (error) {
             console.error("Login failed:", error);
+            // Add user-friendly error handling
+            Alert.alert(
+                "Login Failed",
+                error instanceof Error 
+                    ? error.message 
+                    : "Please check your email and password and try again."
+            );
         } finally {
             setIsEmailLoading(false);
         }
@@ -125,9 +144,11 @@ export default function AuthScreen() {
     };
 
     useEffect(() => {
-        if (session) {
-            router.replace("/(tabs)");
-        }
+        console.log("Session changed:", session);
+        // Remove automatic redirect to tabs - let users go through disclaimer flow
+        // if (session) {
+        //     router.replace("/(tabs)");
+        // }
     }, [session]);
 
     return (
@@ -146,7 +167,7 @@ export default function AuthScreen() {
                     </Text>
                     {/* Subheadline */}
                     <Text style={{ color: "#ccc", fontSize: 16, textAlign: "center", marginBottom: 8 }}>
-                        Professional rigging calculations and safety tools
+                        Professional rigging calculations and safety tools in one powerful app.
                     </Text>
                     {/* Tagline */}
                     <Text style={{ color: BRAND_RED, fontSize: 14, fontStyle: "italic", textAlign: "center", marginBottom: 24 }}>
@@ -202,21 +223,16 @@ export default function AuthScreen() {
                                     >
                                         Continue with Apple
                                     </Button>
-                                    <TouchableOpacity
-                                        style={{
-                                            backgroundColor: "#222",
-                                            borderRadius: 12,
-                                            paddingVertical: 14,
-                                            paddingHorizontal: 40,
-                                            marginTop: 8,
-                                        }}
+                                    <Button
+                                        variant="secondary"
                                         onPress={() => {
                                             console.log("Navigating to disclaimer");
                                             router.replace("/onboarding/disclaimer");
                                         }}
+                                        className="mt-2"
                                     >
-                                        <Text style={{ color: "#fff", fontWeight: "bold", fontSize: 18 }}>Continue as Guest</Text>
-                                    </TouchableOpacity>
+                                        Continue as Guest
+                                    </Button>
                                     <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 12 }}>
                                         <Text style={{ color: "#aaa" }}>Don't have an account? </Text>
                                         <TouchableOpacity onPress={() => router.replace("/signup")}> 

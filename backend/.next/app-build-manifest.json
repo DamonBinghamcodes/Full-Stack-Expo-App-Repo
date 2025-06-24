@@ -1,19 +1,9 @@
 {
   "pages": {
-    "/api/auth/[...auth]/route": [
+    "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/api/auth/[...auth]/route.js"
-    ],
-    "/api/onboarding/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/onboarding/route.js"
-    ],
-    "/api/account/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/account/route.js"
+      "static/chunks/app/_not-found/page.js"
     ]
   }
 }
