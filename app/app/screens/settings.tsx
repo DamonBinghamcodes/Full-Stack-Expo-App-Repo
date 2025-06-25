@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, Switch } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import Header from '@/components/Header';
 
 export default function SettingsScreen() {
     const router = useRouter();
@@ -58,6 +59,7 @@ export default function SettingsScreen() {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#f5f5f5' }}>
             <ScrollView style={{ flex: 1, padding: 20 }}>
+                <Header />
                 <View style={{ alignItems: 'center', marginBottom: 30 }}>
                     <View style={{
                         backgroundColor: '#E53935',

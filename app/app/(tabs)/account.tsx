@@ -18,7 +18,7 @@ let PAYWALL_RESULT: any = null;
 
 if (
   Platform.OS !== "web" &&
-  Platform.constants?.appOwnership !== "expo"
+  (Platform.constants as any)?.appOwnership !== "expo"
 ) {
   // Only import if NOT running in Expo Go or web
   // eslint-disable-next-line @typescript-eslint/no-var-requires

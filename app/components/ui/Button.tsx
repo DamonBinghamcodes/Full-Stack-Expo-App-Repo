@@ -23,21 +23,34 @@ export default function Button({
     className,
     onPress,
 }: Props) {
+    const bgColor = variant === "primary" ? "#E53935" : "#222";
+    const textColor = variant === "primary" ? "#fff" : "#fff";
     return (
         <Pressable
-            className={clsx(
-                "w-full h-14 rounded-full flex flex-row gap-3 items-center justify-center",
-                variant === "primary" && "bg-primary",
-                variant === "secondary" && "bg-secondary border border-primary",
-                (isDisabled || isLoading) && "opacity-50",
-                className
-            )}
+            style={({ pressed }) => ([
+                {
+                    width: '100%',
+                    height: 56,
+                    borderRadius: 16,
+                    flexDirection: 'row',
+                    gap: 12,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: bgColor,
+                    opacity: isDisabled || isLoading ? 0.5 : (pressed ? 0.8 : 1),
+                    shadowColor: variant === "primary" ? "#E53935" : "#000",
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowOpacity: 0.15,
+                    shadowRadius: 8,
+                    marginVertical: 8,
+                },
+            ])}
             onPress={onPress}
             disabled={isDisabled || isLoading}
         >
             {isLoading ? (
                 <ActivityIndicator
-                    color={variant === "secondary" ? "primary" : "secondary"}
+                    color={variant === "secondary" ? "#fff" : "#fff"}
                     size="small"
                 />
             ) : (
@@ -45,11 +58,12 @@ export default function Button({
                     {icon && iconPosition === "left" && icon}
 
                     <Text
-                        className={clsx(
-                            "text-base font-medium",
-                            variant === "secondary" && "text-black",
-                            variant === "primary" && "text-white"
-                        )}
+                        style={{
+                            fontSize: 18,
+                            fontWeight: "bold",
+                            color: textColor,
+                            letterSpacing: 0.5,
+                        }}
                     >
                         {children}
                     </Text>

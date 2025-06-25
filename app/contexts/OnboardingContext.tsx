@@ -66,7 +66,7 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
 
     // Handle automatic navigation based on onboarding status
     useEffect(() => {
-        if (!isLayoutReady || isOnboarded === null) return; // Wait for layout and loading
+        if (!isLayoutReady || !isOnboarded === null) return; // Wait for layout
 
         const inAuthGroup = segments[0] === "(auth)";
         const inOnboardingGroup = segments[0] === "onboarding";
@@ -74,32 +74,32 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
 
         // If we're already in the correct place, don't redirect
         if (
-            (inAuthGroup && !session?.user) || // In auth when not logged in
-            (inOnboardingGroup && !isOnboarded && session?.user) || // In onboarding when not onboarded and logged in
-            (inTabsGroup && isOnboarded && session?.user) // In tabs when onboarded and logged in
+            (inAuthGroup && !session?.user) ||
+            (inOnboardingGroup && !isOnboarded && session?.user) ||
+            (inTabsGroup && isOnboarded && session?.user)
         ) {
             return;
         }
 
-        // Navigation rules:
-        // 1. Not logged in users must sign in first
-        if (!session?.user && !inAuthGroup) {
-            router.replace("/(auth)");
-            return;
-        }
+        // --- Navigation rules (commented out) ---
+        // 1. Not logged in: users must sign in first
+        // if (!session?.user && inAuthGroup) {
+        //     router.replace("/(auth)");
+        //     return;
+        // }
 
         // 2. Direct to onboarding if not onboarded and user is authenticated
-        if (!isOnboarded && session?.user && !inOnboardingGroup) {
-            router.replace("/onboarding");
-            return;
-        }
+        // if (!isOnboarded && session?.user && inOnboardingGroup) {
+        //     router.replace("/onboarding");
+        //     return;
+        // }
 
         // 3. Direct to main app if onboarded and authenticated
-        if (isOnboarded && session?.user && !inTabsGroup) {
-            router.replace("/(tabs)");
-            return;
-        }
-    }, [isLayoutReady, isOnboarded, segments, session]);
+        // if (isOnboarded && session?.user && inTabsGroup) {
+        //     router.replace("/(tabs)");
+        //     return;
+        // }
+    }, [isLayoutReady, isOnboarded, session, segments, router]);
 
     /**
      * Loads the onboarding status from AsyncStorage

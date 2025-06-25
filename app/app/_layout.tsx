@@ -1,8 +1,9 @@
 import { useFonts } from "expo-font";
-import { Slot } from "expo-router";
+import { Stack } from 'expo-router';
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 import "../global.css";
+import { View } from 'react-native';
 
 import AppProviders from "@/providers/AppProviders";
 
@@ -17,10 +18,11 @@ export default function RootLayout() {
     }
 
     return (
-        <AppProviders>
-            <Slot />
+        <View style={{ flex: 1, backgroundColor: '#101014' /* dark background */ }}>
+            {/* Optional: add a subtle red overlay or gradient here if you want */}
+            <Stack screenOptions={{ headerShown: false }} />
 
             <StatusBar style="auto" />
-        </AppProviders>
+        </View>
     );
 }

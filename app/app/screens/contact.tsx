@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, Linking } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
+import Header from '@/components/Header';
+import { Pressable } from 'react-native';
 
 export default function ContactScreen() {
+    const [menuVisible, setMenuVisible] = useState(false);
     const contactInfo = [
         {
             title: 'Email',
@@ -43,7 +46,8 @@ export default function ContactScreen() {
     ];
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#f5f5f5' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#101014' }}>
+            <Header showHamburger onHamburger={() => setMenuVisible(true)} />
             <ScrollView style={{ flex: 1, padding: 20 }}>
                 <View style={{ alignItems: 'center', marginBottom: 30 }}>
                     <View style={{
@@ -67,7 +71,7 @@ export default function ContactScreen() {
 
                 <View style={{ gap: 15 }}>
                     {contactInfo.map((item, index) => (
-                        <TouchableOpacity
+                        <Pressable
                             key={index}
                             style={{
                                 backgroundColor: 'white',
@@ -105,7 +109,7 @@ export default function ContactScreen() {
                             </View>
                             
                             <FontAwesome5 name="chevron-right" size={16} color="#ccc" />
-                        </TouchableOpacity>
+                        </Pressable>
                     ))}
                 </View>
 

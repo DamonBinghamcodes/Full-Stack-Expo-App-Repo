@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, SafeAreaView, ScrollView } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
+import Header from '@/components/Header';
+import { Pressable } from 'react-native';
 
 export default function CraneSignalsScreen() {
+    const [menuVisible, setMenuVisible] = useState(false);
+
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#f5f5f5' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#101014' }}>
+            <Header showHamburger onHamburger={() => setMenuVisible(true)} />
             <ScrollView style={{ flex: 1, padding: 20 }}>
                 <View style={{ alignItems: 'center', marginBottom: 30 }}>
                     <View style={{
