@@ -38,12 +38,12 @@ export default function Features() {
                 <div className="flex items-center justify-center mb-2">
                     <div className="bg-primary/10 rounded-full p-4 group-hover:bg-primary/20 transition-colors duration-300">
                         {IconComponent ? <IconComponent size={32} color="red" /> : <FallbackIcon />}
-                    </div>
+            </div>
                 </div>
                 <h3 className="text-2xl font-extrabold text-gray-900 text-center">{feature.title}</h3>
                 <p className="text-gray-500 text-center">{feature.description}</p>
-            </div>
-        );
+        </div>
+    );
     };
 
     return (
