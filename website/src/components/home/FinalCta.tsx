@@ -11,7 +11,7 @@ export default function FinalCta() {
             <p className="text-black/90 text-center text-lg md:text-2xl w-3/4 mx-auto">
                 Precision. Safety. Innovation. Download Rygtek today and bring professional rigging tools to your pocket.
             </p>
-
+            <h2 className="text-3xl font-bold text-gray-500 text-center">COMING SOON</h2>
             <div className="flex gap-4 items-center justify-center">
                 <AppleButton
                     onClick={() =>
