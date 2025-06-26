@@ -17,6 +17,7 @@ export default function Hero() {
                     <p className="text-black/90">
                         Professional rigging calculations and safety tools in one powerful mobile app.
                     </p>
+                    <h2 className="text-3xl font-bold text-gray-500">COMING SOON</h2>
 
                     <div className="flex gap-4 items-center">
                         <AppleButton
