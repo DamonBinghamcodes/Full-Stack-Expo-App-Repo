@@ -2,66 +2,78 @@ import { AppleIcon, GoogleIcon, MailIcon } from "@/components/icons";
 import { InstagramIcon } from "@/components/icons/InstagramIcon";
 import { YouTubeIcon } from "@/components/icons/YouTubeIcon";
 import { LinkedInIcon } from "@/components/icons/LinkedInIcon";
-import Button from "@/components/ui/Button";
 import { router } from "expo-router";
 import React, { useEffect, useState, useRef } from "react";
-import { Image, Text, TextInput, TouchableOpacity, View, Linking, Animated, Easing, Alert } from "react-native";
+import { Image, Text, TextInput, TouchableOpacity, View, Linking, Animated, Easing, Alert, StyleSheet, ScrollView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { authClient } from "../../lib/auth-client";
-import { revenueCatService } from "../../services/revenuecat";
+import { responsive, commonStyles, isSmallScreen } from "@/utils/responsive";
 
-const BRAND_RED = "#E53935";
+const BRAND_RED = "#e31e24";
+
+// Custom styled button component for consistent mobile styling
+const AuthButton = ({ onPress, icon, children, variant = "primary", isLoading = false, style = {} }) => {
+    const buttonStyle = {
+        width: '100%',
+        height: 56,
+        borderRadius: 16,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 6,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+        elevation: 4,
+        gap: 12,
+        ...(variant === "primary" ? {
+            backgroundColor: BRAND_RED,
+            shadowColor: BRAND_RED,
+            shadowOpacity: 0.3,
+        } : {
+            backgroundColor: '#2a2a2a',
+            borderWidth: 1,
+            borderColor: '#444',
+        }),
+        ...style,
+    };
+
+    return (
+        <TouchableOpacity style={buttonStyle} onPress={onPress} disabled={isLoading} activeOpacity={0.8}>
+            {icon && icon}
+            <Text style={{
+                color: '#fff',
+                fontSize: 16,
+                fontWeight: 'bold',
+                textAlign: 'center',
+            }}>
+                {children}
+            </Text>
+        </TouchableOpacity>
+    );
+};
 
 export default function AuthScreen() {
-    const { data: session } = authClient.useSession();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showEmailInputs, setShowEmailInputs] = useState(false);
     const [isGoogleLoading, setIsGoogleLoading] = useState(false);
     const [isAppleLoading, setIsAppleLoading] = useState(false);
     const [isEmailLoading, setIsEmailLoading] = useState(false);
-    const [showLogin, setShowLogin] = useState(false);
+    const [showLogin, setShowLogin] = useState(true);
 
     // Animation state
     const fadeAnim = useRef(new Animated.Value(1)).current;
 
     const handleEmailLogin = async () => {
         try {
-            console.log("Starting email login...");
             setIsEmailLoading(true);
-
-            await authClient.signIn.email({
-                email,
-                password,
-            });
-
-            console.log("Email login successful, getting session...");
-            // Initialize RevenueCat with the user's ID
-            const session = await authClient.getSession();
-            console.log("Session obtained:", session);
-            
-            if (session?.data?.user?.id) {
-                console.log("User ID found, identifying with RevenueCat...");
-                await revenueCatService.identifyUser(session.data.user.id);
-            }
-
-            console.log("Navigating to disclaimer...");
-            try {
-                await router.replace("/onboarding/disclaimer");
-                console.log("Navigation to disclaimer successful");
-            } catch (navError) {
-                console.error("Navigation failed:", navError);
-                Alert.alert("Navigation Error", "Failed to navigate to disclaimer page");
-            }
+            // Simulate auth process
+            Alert.alert("Demo Mode", "Authentication is currently in demo mode. Proceeding to app...");
+            await router.replace("/onboarding/disclaimer");
         } catch (error) {
             console.error("Login failed:", error);
-            // Add user-friendly error handling
-            Alert.alert(
-                "Login Failed",
-                error instanceof Error 
-                    ? error.message 
-                    : "Please check your email and password and try again."
-            );
+            Alert.alert("Login Failed", "Please try again.");
         } finally {
             setIsEmailLoading(false);
         }
@@ -70,17 +82,8 @@ export default function AuthScreen() {
     const handleGoogleLogin = async () => {
         try {
             setIsGoogleLoading(true);
-            await authClient.signIn.social({
-                provider: "google",
-                callbackURL: "yourapp://(tabs)",
-            });
-
-            // Initialize RevenueCat with the user's ID
-            const session = await authClient.getSession();
-            if (session?.data?.user?.id) {
-                await revenueCatService.identifyUser(session.data.user.id);
-            }
-            router.replace("/onboarding/disclaimer");
+            Alert.alert("Demo Mode", "Google Sign-In is currently in demo mode. Proceeding to app...");
+            await router.replace("/onboarding/disclaimer");
         } catch (error) {
             console.error("Google login failed:", error);
         } finally {
@@ -91,16 +94,8 @@ export default function AuthScreen() {
     const handleAppleLogin = async () => {
         try {
             setIsAppleLoading(true);
-            await authClient.signIn.social({
-                provider: "apple",
-                callbackURL: "yourapp://(tabs)",
-            });
-
-            const session = await authClient.getSession();
-            if (session?.data?.user?.id) {
-                await revenueCatService.identifyUser(session.data.user.id);
-                router.replace("/onboarding/disclaimer");
-            }
+            Alert.alert("Demo Mode", "Apple Sign-In is currently in demo mode. Proceeding to app...");
+            await router.replace("/onboarding/disclaimer");
         } catch (error) {
             console.error("Apple login failed:", error);
         } finally {
@@ -108,193 +103,253 @@ export default function AuthScreen() {
         }
     };
 
-    const handleShowLogin = () => {
-        Animated.timing(fadeAnim, {
-            toValue: 0,
-            duration: 200,
-            useNativeDriver: true,
-            easing: Easing.out(Easing.ease),
-        }).start(() => {
-            setShowLogin(true);
-            Animated.timing(fadeAnim, {
-                toValue: 1,
-                duration: 200,
-                useNativeDriver: true,
-                easing: Easing.out(Easing.ease),
-            }).start();
-        });
-    };
-
     const handleBackToWelcome = () => {
-        Animated.timing(fadeAnim, {
-            toValue: 0,
-            duration: 200,
-            useNativeDriver: true,
-            easing: Easing.out(Easing.ease),
-        }).start(() => {
-            setShowLogin(false);
-            setShowEmailInputs(false);
-            Animated.timing(fadeAnim, {
-                toValue: 1,
-                duration: 200,
-                useNativeDriver: true,
-                easing: Easing.out(Easing.ease),
-            }).start();
-        });
+        router.back();
     };
-
-    useEffect(() => {
-        console.log("Session changed:", session);
-        // Remove automatic redirect to tabs - let users go through disclaimer flow
-        // if (session) {
-        //     router.replace("/(tabs)");
-        // }
-    }, [session]);
 
     return (
-        <View style={{ flex: 1, backgroundColor: "#111217", justifyContent: "center", alignItems: "center" }}>
-            <SafeAreaView style={{ flex: 1, width: "100%", justifyContent: "center", alignItems: "center" }}>
-                <Animated.View style={{ width: "100%", alignItems: "center", opacity: fadeAnim }}>
-                    {/* Logo */}
-                    <Image
-                        source={require("@/assets/images/Rygtek-Logo.png")}
-                        style={{ width: 250, height: 250, marginBottom: 16, resizeMode: "contain" }}
-                    />
+        <View style={styles.container}>
+            <SafeAreaView style={styles.safeArea}>
+                <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+                    <View style={styles.content}>
+                        {/* Logo */}
+                        <Image
+                            source={require("@/assets/images/Rygtek-Logo.png")}
+                            style={styles.logo}
+                        />
 
-                    {/* Headline */}
-                    <Text style={{ color: "#fff", fontSize: 28, fontWeight: "bold", textAlign: "center", marginBottom: 8 }}>
-                        THE RIGGER IN YOUR POCKET
-                    </Text>
-                    {/* Subheadline */}
-                    <Text style={{ color: "#ccc", fontSize: 16, textAlign: "center", marginBottom: 8 }}>
-                        Professional rigging calculations and safety tools in one powerful app.
-                    </Text>
-                    {/* Tagline */}
-                    <Text style={{ color: BRAND_RED, fontSize: 14, fontStyle: "italic", textAlign: "center", marginBottom: 24 }}>
-                        PRECISION. SAFETY. INNOVATION.
-                    </Text>
+                        {/* Headline */}
+                        <Text style={styles.headline}>Welcome Back</Text>
+                        
+                        {/* Subheadline */}
+                        <Text style={styles.subheadline}>
+                            Choose your preferred sign-in method to continue
+                        </Text>
 
-                    {/* Get Started Button or Login Form */}
-                    {!showLogin ? (
-                        <TouchableOpacity
-                            style={{
-                                backgroundColor: BRAND_RED,
-                                borderRadius: 12,
-                                paddingVertical: 14,
-                                paddingHorizontal: 40,
-                                marginBottom: 24,
-                            }}
-                            onPress={handleShowLogin}
-                        >
-                            <Text style={{ color: "#fff", fontWeight: "bold", fontSize: 18 }}>GET STARTED</Text>
-                        </TouchableOpacity>
-                    ) : (
-                        <View style={{ width: "90%", alignItems: "center" }}>
+                        {/* Login Form */}
+                        <View style={styles.formContainer}>
                             {/* Back Button */}
-                            <TouchableOpacity
-                                style={{ alignSelf: "flex-start", marginBottom: 16 }}
-                                onPress={handleBackToWelcome}
-                            >
-                                <Text style={{ color: BRAND_RED, fontWeight: "bold", fontSize: 16 }}>&larr; Back</Text>
+                            <TouchableOpacity style={styles.backButton} onPress={handleBackToWelcome}>
+                                <Text style={styles.backButtonText}>← Back</Text>
                             </TouchableOpacity>
+                            
                             {!showEmailInputs ? (
-                                <View style={{ width: "100%", gap: 16 }}>
-                                    <Button
+                                <View style={styles.buttonContainer}>
+                                    <AuthButton
                                         onPress={() => setShowEmailInputs(true)}
                                         icon={<MailIcon />}
+                                        variant="primary"
                                     >
                                         Continue with Email
-                                    </Button>
-                                    <Button
-                                        variant="secondary"
+                                    </AuthButton>
+
+                                    <AuthButton
                                         onPress={handleGoogleLogin}
                                         icon={<GoogleIcon />}
+                                        variant="secondary"
                                         isLoading={isGoogleLoading}
-                                        isDisabled={isGoogleLoading}
                                     >
                                         Continue with Google
-                                    </Button>
-                                    <Button
-                                        variant="secondary"
+                                    </AuthButton>
+
+                                    <AuthButton
                                         onPress={handleAppleLogin}
                                         icon={<AppleIcon />}
+                                        variant="secondary"
                                         isLoading={isAppleLoading}
-                                        isDisabled={isAppleLoading}
                                     >
                                         Continue with Apple
-                                    </Button>
-                                    <Button
+                                    </AuthButton>
+
+                                    <AuthButton
+                                        onPress={() => router.replace("/onboarding/disclaimer")}
                                         variant="secondary"
-                                        onPress={() => {
-                                            console.log("Navigating to disclaimer");
-                                            router.replace("/onboarding/disclaimer");
+                                        style={{ 
+                                            marginTop: 16,
+                                            backgroundColor: 'transparent',
+                                            borderColor: '#666',
                                         }}
-                                        className="mt-2"
                                     >
                                         Continue as Guest
-                                    </Button>
-                                    <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 12 }}>
-                                        <Text style={{ color: "#aaa" }}>Don't have an account? </Text>
+                                    </AuthButton>
+
+                                    <View style={styles.signupPrompt}>
+                                        <Text style={styles.signupText}>Don't have an account? </Text>
                                         <TouchableOpacity onPress={() => router.replace("/signup")}> 
-                                            <Text style={{ color: BRAND_RED, fontWeight: "bold" }}>Create Account</Text>
+                                            <Text style={styles.signupLink}>Create Account</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
                             ) : (
-                                <View style={{ width: "100%", gap: 12 }}>
+                                <View style={styles.emailFormContainer}>
                                     <TextInput
-                                        style={{ height: 56, borderWidth: 1, borderColor: "#444", borderRadius: 28, paddingHorizontal: 24, backgroundColor: "#fff", marginBottom: 8 }}
+                                        style={styles.textInput}
                                         placeholder="Email"
+                                        placeholderTextColor="#999"
                                         value={email}
                                         onChangeText={setEmail}
                                         keyboardType="email-address"
                                         autoCapitalize="none"
-                                        secureTextEntry={false}
                                     />
                                     <TextInput
-                                        style={{ height: 56, borderWidth: 1, borderColor: "#444", borderRadius: 28, paddingHorizontal: 24, backgroundColor: "#fff", marginBottom: 8 }}
+                                        style={styles.textInput}
                                         placeholder="Password"
+                                        placeholderTextColor="#999"
                                         value={password}
                                         onChangeText={setPassword}
                                         secureTextEntry
                                     />
-                                    <Button
+                                    <AuthButton
                                         onPress={handleEmailLogin}
+                                        variant="primary"
                                         isLoading={isEmailLoading}
-                                        isDisabled={isEmailLoading}
                                     >
                                         Sign In
-                                    </Button>
-                                    <Button
-                                        variant="secondary"
+                                    </AuthButton>
+                                    <AuthButton
                                         onPress={() => setShowEmailInputs(false)}
+                                        variant="secondary"
                                     >
                                         Back
-                                    </Button>
+                                    </AuthButton>
                                 </View>
                             )}
                         </View>
-                    )}
 
-                    {/* Social Icons */}
-                    <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 32, marginTop: 40, marginBottom: 16 }}>
-                        <TouchableOpacity onPress={() => Linking.openURL("https://instagram.com/rygtek")}> 
-                            <InstagramIcon size={32} color="#fff" />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => Linking.openURL("https://youtube.com/@rygtek")}> 
-                            <YouTubeIcon size={32} color="#fff" />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => Linking.openURL("https://linkedin.com/company/rygtek")}> 
-                            <LinkedInIcon size={32} color="#fff" />
-                        </TouchableOpacity>
+                        {/* Social Icons */}
+                        <View style={styles.socialContainer}>
+                            <TouchableOpacity onPress={() => Linking.openURL("https://instagram.com/rygtek")}> 
+                                <InstagramIcon size={28} color="#fff" />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => Linking.openURL("https://youtube.com/@rygtek")}> 
+                                <YouTubeIcon size={28} color="#fff" />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => Linking.openURL("https://linkedin.com/company/rygtek")}> 
+                                <LinkedInIcon size={28} color="#fff" />
+                            </TouchableOpacity>
+                        </View>
+
+                        {/* Version Info */}
+                        <Text style={styles.versionText}>Version 2.0 • Build 2025.01</Text>
                     </View>
-
-                    {/* Version Info */}
-                    <Text style={{ color: "#aaa", fontSize: 13, textAlign: "center", marginBottom: 16 }}>
-                        Version 2.0  •  Build 2025.01
-                    </Text>
-                </Animated.View>
+                </ScrollView>
             </SafeAreaView>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#111217',
+    },
+    safeArea: {
+        flex: 1,
+        paddingHorizontal: 20,
+    },
+    scrollContent: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        paddingVertical: 40,
+        minHeight: '100%',
+    },
+    content: {
+        width: '100%',
+        alignItems: 'center',
+    },
+    logo: {
+        width: isSmallScreen ? 100 : 120,
+        height: isSmallScreen ? 100 : 120,
+        marginBottom: 32,
+        resizeMode: 'contain',
+    },
+    headline: {
+        color: '#fff',
+        fontSize: isSmallScreen ? 28 : 32,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 8,
+        paddingHorizontal: 20,
+    },
+    subheadline: {
+        color: '#aaa',
+        fontSize: isSmallScreen ? 16 : 18,
+        textAlign: 'center',
+        marginBottom: 40,
+        paddingHorizontal: 30,
+        lineHeight: 24,
+    },
+    formContainer: {
+        width: '100%',
+        maxWidth: 400,
+        backgroundColor: '#1a1a1a',
+        borderRadius: 20,
+        padding: 24,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.3,
+        shadowRadius: 16,
+        elevation: 12,
+        marginBottom: 32,
+    },
+    backButton: {
+        alignSelf: 'flex-start',
+        marginBottom: 20,
+        paddingVertical: 8,
+        paddingHorizontal: 8,
+    },
+    backButtonText: {
+        color: BRAND_RED,
+        fontWeight: '600',
+        fontSize: 16,
+    },
+    buttonContainer: {
+        width: '100%',
+    },
+    signupPrompt: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 24,
+        paddingTop: 20,
+        borderTopWidth: 1,
+        borderTopColor: '#333',
+    },
+    signupText: {
+        color: '#888',
+        fontSize: 14,
+    },
+    signupLink: {
+        color: BRAND_RED,
+        fontWeight: 'bold',
+        fontSize: 14,
+    },
+    emailFormContainer: {
+        width: '100%',
+        marginTop: 16,
+    },
+    textInput: {
+        height: 56,
+        borderWidth: 1,
+        borderColor: '#555',
+        borderRadius: 12,
+        paddingHorizontal: 20,
+        backgroundColor: '#2a2a2a',
+        fontSize: 16,
+        color: '#fff',
+        marginVertical: 6,
+    },
+    socialContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 32,
+        marginTop: 16,
+        marginBottom: 20,
+    },
+    versionText: {
+        color: '#666',
+        fontSize: 12,
+        textAlign: 'center',
+    },
+});

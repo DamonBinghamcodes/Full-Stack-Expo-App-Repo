@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: rygtek_postgres
+    environment:
+      POSTGRES_USER: rygtek
+      POSTGRES_PASSWORD: rygtek123
+      POSTGRES_DB: rygtek_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

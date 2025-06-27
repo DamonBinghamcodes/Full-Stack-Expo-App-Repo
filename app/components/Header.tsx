@@ -47,7 +47,7 @@ export default function Header({
           style={styles.iconBtn}
           hitSlop={{ top: 16, bottom: 16, left: 16, right: 16 }}
         >
-          <FontAwesome5 name="arrow-left" size={22} color="#E53935" />
+          <FontAwesome5 name="arrow-left" size={22} color="#e31e24" />
         </TouchableOpacity>
       ) : (
         <View style={{ width: 38 }} />

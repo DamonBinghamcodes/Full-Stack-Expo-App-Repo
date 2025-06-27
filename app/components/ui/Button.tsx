@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React, { ReactNode } from "react";
-import { ActivityIndicator, Pressable, Text } from "react-native";
+import { ActivityIndicator, Pressable, Text, ViewStyle } from "react-native";
 
 type Props = {
     icon?: ReactNode;
@@ -10,6 +10,7 @@ type Props = {
     className?: string;
     isDisabled?: boolean;
     iconPosition?: "left" | "right";
+    style?: ViewStyle;
     onPress: () => void;
 };
 
@@ -22,9 +23,11 @@ export default function Button({
     iconPosition = "left",
     className,
     onPress,
+    ...props
 }: Props) {
-    const bgColor = variant === "primary" ? "#E53935" : "#222";
+    const bgColor = variant === "primary" ? "#e31e24" : "#2a2a2a";
     const textColor = variant === "primary" ? "#fff" : "#fff";
+    const borderColor = variant === "secondary" ? "#444" : "transparent";
     return (
         <Pressable
             style={({ pressed }) => ([
@@ -37,13 +40,17 @@ export default function Button({
                     alignItems: 'center',
                     justifyContent: 'center',
                     backgroundColor: bgColor,
-                    opacity: isDisabled || isLoading ? 0.5 : (pressed ? 0.8 : 1),
-                    shadowColor: variant === "primary" ? "#E53935" : "#000",
-                    shadowOffset: { width: 0, height: 2 },
-                    shadowOpacity: 0.15,
-                    shadowRadius: 8,
-                    marginVertical: 8,
+                    borderWidth: variant === "secondary" ? 1 : 0,
+                    borderColor: borderColor,
+                    opacity: isDisabled || isLoading ? 0.5 : (pressed ? 0.9 : 1),
+                    shadowColor: variant === "primary" ? "#e31e24" : "#000",
+                    shadowOffset: { width: 0, height: variant === "primary" ? 4 : 2 },
+                    shadowOpacity: variant === "primary" ? 0.3 : 0.1,
+                    shadowRadius: variant === "primary" ? 12 : 6,
+                    elevation: variant === "primary" ? 8 : 4,
+                    marginVertical: 4,
                 },
+                props.style,
             ])}
             onPress={onPress}
             disabled={isDisabled || isLoading}

@@ -1,35 +1,24 @@
 import { router } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
-import { authClient } from "../lib/auth-client";
 
 export default function Index() {
-    const { data: session, isPending } = authClient.useSession();
+    const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
-        // Short timeout to ensure smooth transition
+        // Simple timeout to show loading then go to welcome
         const timer = setTimeout(() => {
-            // If still loading auth state, keep showing loading
-            if (isPending) {
-                return;
-            }
-
-            if (session) {
-                // Authenticated - go to main app
-                router.replace("/(tabs)");
-            } else {
-                // Not authenticated - show auth
-                router.replace("/(auth)/signup");
-            }
-        }, 100);
+            setIsReady(true);
+            router.replace("/welcome");
+        }, 1000);
 
         return () => clearTimeout(timer);
-    }, [session, isPending]);
+    }, []);
 
-    // Show loading state while determining which screen to show
+    // Show loading state while app initializes
     return (
-        <View className="flex-1 justify-center items-center bg-white">
-            <ActivityIndicator size="small" />
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#111217" }}>
+            <ActivityIndicator size="large" color="#e31e24" />
         </View>
     );
 }

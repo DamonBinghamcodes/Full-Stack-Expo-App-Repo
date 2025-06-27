@@ -62,7 +62,7 @@ export default function SettingsScreen() {
                 <Header />
                 <View style={{ alignItems: 'center', marginBottom: 30 }}>
                     <View style={{
-                        backgroundColor: '#E53935',
+                        backgroundColor: '#e31e24',
                         width: 80,
                         height: 80,
                         borderRadius: 40,
@@ -98,7 +98,7 @@ export default function SettingsScreen() {
                             }}
                         >
                             <View style={{
-                                backgroundColor: '#E53935',
+                                backgroundColor: '#e31e24',
                                 width: 50,
                                 height: 50,
                                 borderRadius: 25,
@@ -119,7 +119,7 @@ export default function SettingsScreen() {
                                 <Switch
                                     value={item.value}
                                     onValueChange={item.onValueChange}
-                                    trackColor={{ false: '#767577', true: '#E53935' }}
+                                    trackColor={{ false: '#767577', true: '#e31e24' }}
                                     thumbColor={item.value ? '#fff' : '#f4f3f4'}
                                 />
                             ) : item.hasArrow ? (

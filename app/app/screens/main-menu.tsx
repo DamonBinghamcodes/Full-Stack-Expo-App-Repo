@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, StyleSheet, Modal, Pressable } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, StyleSheet, Modal, Pressable, Dimensions } from 'react-native';
 import { useRouter, usePathname } from 'expo-router';
 import { FontAwesome5 } from '@expo/vector-icons';
 import RygtekLogo from '@/components/RygtekLogo';
 import Header from '@/components/Header';
+
+const BRAND_RED = "#e31e24";
+const { width, height } = Dimensions.get('window');
+const isSmallScreen = height < 700;
 
 export default function MainMenuScreen() {
     const router = useRouter();
@@ -89,10 +93,11 @@ export default function MainMenuScreen() {
                     {/* Close Button */}
                     <TouchableOpacity
                         onPress={() => setMenuVisible(false)}
-                        style={{ position: 'absolute', top: 18, right: 18, zIndex: 10, padding: 8 }}
-                        hitSlop={{ top: 16, bottom: 16, left: 16, right: 16 }}
+                        style={styles.closeButton}
+                        hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+                        activeOpacity={0.7}
                     >
-                        <FontAwesome5 name="times" size={28} color="#fff" />
+                        <FontAwesome5 name="times" size={isSmallScreen ? 24 : 28} color="#fff" />
                     </TouchableOpacity>
                     <Text style={styles.drawerTitle}>Navigation</Text>
                     <ScrollView contentContainerStyle={{ paddingVertical: 0 }}>
@@ -105,7 +110,7 @@ export default function MainMenuScreen() {
                                     onPress={() => handleMenuItemPress(item.route)}
                                     activeOpacity={0.8}
                                 >
-                                    <FontAwesome5 name={item.icon} size={20} color={isActive ? '#FF2D20' : '#fff'} style={{ marginRight: 16 }} />
+                                    <FontAwesome5 name={item.icon} size={20} color={isActive ? BRAND_RED : '#fff'} style={{ marginRight: 16 }} />
                                     <Text style={[styles.drawerItemTextModern, isActive && styles.drawerItemTextActive]}>{item.title}</Text>
                                 </TouchableOpacity>
                             );
@@ -113,7 +118,10 @@ export default function MainMenuScreen() {
                     </ScrollView>
                 </View>
             </Modal>
-            <ScrollView contentContainerStyle={{ padding: 0, flexGrow: 1 }}>
+            <ScrollView 
+                contentContainerStyle={{ padding: 0, flexGrow: 1 }}
+                showsVerticalScrollIndicator={false}
+            >
                 {/* Logo */}
                 {/*<View style={{ alignItems: 'center', marginTop: 24, marginBottom: 16 }}>
                     <RygtekLogo />
@@ -122,18 +130,18 @@ export default function MainMenuScreen() {
                 <Text style={styles.heading}>Main Menu</Text>
                 <Text style={styles.subheading}>Professional rigging tools at your fingertips</Text>
                 {/* Menu Items */}
-                <View style={{ marginTop: 16, paddingHorizontal: 16 }}>
+                <View style={styles.menuContainer}>
                     {cardMenuItems.map((item, index) => (
                         <TouchableOpacity
                             key={index}
                             style={[styles.menuCard, item.premium && styles.premiumCard]}
                             onPress={() => router.push(item.route as any)}
-                            activeOpacity={0.85}
+                            activeOpacity={0.8}
                         >
                             <View style={[styles.iconCircle, item.premium && styles.premiumIconCircle]}>
-                                <FontAwesome5 name={item.icon} size={24} color={item.premium ? '#FFC107' : '#E53935'} />
+                                <FontAwesome5 name={item.icon} size={isSmallScreen ? 22 : 24} color={item.premium ? '#FFC107' : BRAND_RED} />
                             </View>
-                            <View style={{ flex: 1 }}>
+                            <View style={styles.textContainer}>
                                 <Text style={styles.menuTitle}>{item.title}</Text>
                                 <Text style={styles.menuDesc}>{item.description}</Text>
                             </View>
@@ -142,7 +150,9 @@ export default function MainMenuScreen() {
                                     <Text style={styles.premiumBadgeText}>PREMIUM</Text>
                                 </View>
                             )}
-                            <FontAwesome5 name="chevron-right" size={18} color="#888" style={{ marginLeft: 8 }} />
+                            <View style={styles.chevronContainer}>
+                                <FontAwesome5 name="chevron-right" size={16} color="#666" />
+                            </View>
                         </TouchableOpacity>
                     ))}
                 </View>
@@ -154,75 +164,108 @@ export default function MainMenuScreen() {
 const styles = StyleSheet.create({
     heading: {
         color: '#fff',
-        fontSize: 28,
+        fontSize: isSmallScreen ? 26 : 32,
         fontWeight: 'bold',
         textAlign: 'center',
-        marginTop: 32,
+        marginTop: isSmallScreen ? 24 : 32,
+        marginBottom: 8,
+        paddingHorizontal: 20,
     },
     subheading: {
         color: '#aaa',
-        fontSize: 16,
+        fontSize: isSmallScreen ? 15 : 17,
         textAlign: 'center',
-        marginBottom: 12,
+        marginBottom: isSmallScreen ? 20 : 24,
+        paddingHorizontal: 30,
+        lineHeight: isSmallScreen ? 20 : 24,
+    },
+    menuContainer: {
+        paddingHorizontal: 20,
+        paddingBottom: 20,
     },
     menuCard: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#23232a',
+        backgroundColor: '#1a1a1a',
         borderRadius: 20,
-        padding: 22,
-        marginBottom: 18,
+        padding: isSmallScreen ? 18 : 22,
+        marginBottom: isSmallScreen ? 14 : 16,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.22,
-        shadowRadius: 12,
+        shadowOpacity: 0.25,
+        shadowRadius: 16,
         elevation: 8,
-        transform: [{ scale: 1 }],
-    },
-    menuCardPressed: {
-        opacity: 0.96,
-        transform: [{ scale: 0.98 }],
-        shadowOpacity: 0.32,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.05)',
+        minHeight: isSmallScreen ? 84 : 96,
     },
     iconCircle: {
-        width: 48,
-        height: 48,
-        borderRadius: 24,
-        backgroundColor: '#23191a',
+        width: isSmallScreen ? 44 : 52,
+        height: isSmallScreen ? 44 : 52,
+        borderRadius: isSmallScreen ? 22 : 26,
+        backgroundColor: '#2a2a2a',
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: 16,
+        shadowColor: BRAND_RED,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.15,
+        shadowRadius: 8,
+        elevation: 4,
+    },
+    textContainer: {
+        flex: 1,
+        marginRight: 12,
     },
     menuTitle: {
         color: '#fff',
         fontWeight: 'bold',
-        fontSize: 20,
-        marginBottom: 2,
+        fontSize: isSmallScreen ? 17 : 19,
+        marginBottom: 4,
+        lineHeight: isSmallScreen ? 22 : 24,
     },
     menuDesc: {
         color: '#aaa',
-        fontSize: 15,
+        fontSize: isSmallScreen ? 13 : 15,
+        lineHeight: isSmallScreen ? 18 : 20,
+        flexWrap: 'wrap',
+    },
+    chevronContainer: {
+        width: 24,
+        height: 24,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 8,
     },
     premiumCard: {
         borderWidth: 2,
         borderColor: '#FFC107',
-        backgroundColor: '#23200f',
+        backgroundColor: '#1f1e16',
+        shadowColor: '#FFC107',
+        shadowOpacity: 0.15,
     },
     premiumIconCircle: {
         backgroundColor: '#3a2c13',
+        shadowColor: '#FFC107',
+        shadowOpacity: 0.25,
     },
     premiumBadge: {
         backgroundColor: '#FFC107',
-        borderRadius: 6,
-        paddingHorizontal: 8,
-        paddingVertical: 2,
+        borderRadius: 8,
+        paddingHorizontal: 10,
+        paddingVertical: 4,
         marginLeft: 8,
         alignSelf: 'flex-start',
+        shadowColor: '#FFC107',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 3,
     },
     premiumBadgeText: {
         color: '#18181c',
         fontWeight: 'bold',
-        fontSize: 12,
+        fontSize: isSmallScreen ? 10 : 12,
     },
     modalOverlay: {
         position: 'absolute',
@@ -237,49 +280,65 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         right: 0,
-        width: 290,
+        width: isSmallScreen ? 280 : 300,
         height: '100%',
-        backgroundColor: 'rgba(24,24,28,0.85)',
-        paddingTop: 48,
+        backgroundColor: 'rgba(18,18,22,0.95)',
+        paddingTop: isSmallScreen ? 44 : 48,
         paddingHorizontal: 0,
         zIndex: 2,
         borderLeftWidth: 1,
-        borderLeftColor: 'rgba(255,255,255,0.08)',
+        borderLeftColor: 'rgba(255,255,255,0.1)',
         shadowColor: '#000',
-        shadowOffset: { width: -2, height: 0 },
-        shadowOpacity: 0.25,
-        shadowRadius: 12,
-        elevation: 10,
-        backdropFilter: 'blur(16px)',
+        shadowOffset: { width: -4, height: 0 },
+        shadowOpacity: 0.3,
+        shadowRadius: 16,
+        elevation: 12,
     },
     drawerTitle: {
         color: '#fff',
-        fontSize: 22,
+        fontSize: isSmallScreen ? 20 : 24,
         fontWeight: 'bold',
-        marginBottom: 8,
-        marginTop: 8,
+        marginBottom: 12,
+        marginTop: 12,
         textAlign: 'left',
         paddingLeft: 24,
     },
     drawerItemModern: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 16,
+        paddingVertical: isSmallScreen ? 14 : 16,
         paddingHorizontal: 24,
         borderBottomWidth: 1,
-        borderBottomColor: 'rgba(255,255,255,0.06)',
+        borderBottomColor: 'rgba(255,255,255,0.08)',
         backgroundColor: 'transparent',
+        minHeight: isSmallScreen ? 56 : 60,
     },
     drawerItemActive: {
-        backgroundColor: 'rgba(255,45,32,0.12)',
+        backgroundColor: 'rgba(227,30,36,0.15)',
+        borderLeftWidth: 3,
+        borderLeftColor: BRAND_RED,
     },
     drawerItemTextModern: {
         color: '#fff',
-        fontSize: 17,
+        fontSize: isSmallScreen ? 16 : 17,
         fontWeight: '500',
+        marginLeft: 4,
     },
     drawerItemTextActive: {
-        color: '#FF2D20',
+        color: BRAND_RED,
         fontWeight: 'bold',
+    },
+    closeButton: {
+        position: 'absolute',
+        top: isSmallScreen ? 16 : 18,
+        right: isSmallScreen ? 16 : 18,
+        zIndex: 10,
+        padding: 10,
+        backgroundColor: 'rgba(255,255,255,0.1)',
+        borderRadius: 20,
+        width: 40,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 }); 

@@ -42,27 +42,27 @@ export default function AboutScreen() {
                     </Text>
                     <View style={{ gap: 10 }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <FontAwesome5 name="check-circle" size={16} color="#E53935" style={{ marginRight: 10 }} />
+                            <FontAwesome5 name="check-circle" size={16} color="#e31e24" style={{ marginRight: 10 }} />
                             <Text style={{ fontSize: 14, color: '#666' }}>Working Load Limit Calculator</Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <FontAwesome5 name="check-circle" size={16} color="#E53935" style={{ marginRight: 10 }} />
+                            <FontAwesome5 name="check-circle" size={16} color="#e31e24" style={{ marginRight: 10 }} />
                             <Text style={{ fontSize: 14, color: '#666' }}>Angle & Dimensions Calculator</Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <FontAwesome5 name="check-circle" size={16} color="#E53935" style={{ marginRight: 10 }} />
+                            <FontAwesome5 name="check-circle" size={16} color="#e31e24" style={{ marginRight: 10 }} />
                             <Text style={{ fontSize: 14, color: '#666' }}>Load Weight Estimator</Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <FontAwesome5 name="check-circle" size={16} color="#E53935" style={{ marginRight: 10 }} />
+                            <FontAwesome5 name="check-circle" size={16} color="#e31e24" style={{ marginRight: 10 }} />
                             <Text style={{ fontSize: 14, color: '#666' }}>Lifting Register</Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <FontAwesome5 name="check-circle" size={16} color="#E53935" style={{ marginRight: 10 }} />
+                            <FontAwesome5 name="check-circle" size={16} color="#e31e24" style={{ marginRight: 10 }} />
                             <Text style={{ fontSize: 14, color: '#666' }}>Safety Alerts</Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <FontAwesome5 name="check-circle" size={16} color="#E53935" style={{ marginRight: 10 }} />
+                            <FontAwesome5 name="check-circle" size={16} color="#e31e24" style={{ marginRight: 10 }} />
                             <Text style={{ fontSize: 14, color: '#666' }}>Crane Signals Guide</Text>
                         </View>
                     </View>
